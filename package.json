@@ -1,0 +1,24 @@
+{
+  "name": "douyin-live-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "node ./dist/bundle.js",
+    "dev:watch": "rollup -c -w --watch.onEnd='npm run dev'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.4.5",
+    "rollup": "^3.27.0",
+    "tslib": "^2.6.1"
+  }
+}
