@@ -17,3 +17,19 @@ export const getCurrentTime = (format = "yyyy-MM-dd hh:mm:ss"): string => {
         .replace("mm", minutes)
         .replace("ss", seconds);
 };
+
+
+/**
+ * 按照任务传递的顺序逐一执行每个任务
+ * @param tasks
+ */
+export const execTasks = async (tasks: Array<() => Promise<any>>) => {
+    for (const task of tasks) {
+        await task();
+    }
+};
+
+// 休眠函数
+export const sleep = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+};
