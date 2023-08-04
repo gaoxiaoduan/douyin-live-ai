@@ -27,7 +27,7 @@ export const createBot = async (messages: ChatCompletionRequestMessage[]) => {
         });
         const answer = completion.data.choices[0].message;
 
-        return answer?.content;
+        return answer?.content || "我好像迷失在了无尽的宇宙中...";
     } catch (e: any) {
         logger.error("openAI Error:", e);
         if (e.toString().includes("Request failed with status code 429")) {

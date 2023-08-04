@@ -1,4 +1,8 @@
 import { Page } from "puppeteer";
+import { WAKE_UP_WORDS } from "@/config";
+import { getSession } from "@/session";
+import logger from "@/utils/logger";
+import { answerUser } from "@/pptr/answerUser";
 
 interface ICommentData {
     user: string;
@@ -10,11 +14,32 @@ export const getLiveComment = async (page: Page) => {
     const commentList = await page.waitForSelector(".webcast-chatroom___items > div:nth-child(1)");
     if (!commentList) return;
 
+    const session = getSession();
+
     // 注入函数
     // 监听直播间评论回调
-    await page.exposeFunction("comment", (commentData: ICommentData) => {
-        // TODO:识别唤醒词，进行AI接口调用
-        console.log(commentData.user, commentData.content);
+    await page.exposeFunction("comment", async (commentData: ICommentData) => {
+        const {user, content} = commentData;
+        logger.info(user, content);
+        let isWakeUp = false;
+        let ask = "";
+
+        // 识别唤醒词
+        for (const word of WAKE_UP_WORDS) {
+            if (content.startsWith(word)) {
+                logger.info("唤醒词：", word, user);
+                isWakeUp = true;
+                ask = content.replace(word, "");
+                break;
+            }
+        }
+        if (!isWakeUp) return;
+
+        // AI接口调用
+        const answer = await session.ask(user, ask);
+        let answerStr = `@${user} ${answer}`.slice(0, 50);
+        logger.info("[Bot]", answerStr);
+        await answerUser(page, answerStr);
     });
 
     // 监听直播间评论
@@ -23,7 +48,6 @@ export const getLiveComment = async (page: Page) => {
             for (const mutationRecord of mutationsList) {
                 if (mutationRecord.type === "childList") {
                     for (const node of mutationRecord.addedNodes) {
-                        // console.log("node:", node);
                         if (node.childNodes.length === 0) continue;
 
                         const parent = node.childNodes[0];
@@ -34,7 +58,7 @@ export const getLiveComment = async (page: Page) => {
 
                         const content = parent.childNodes[2].childNodes[0].textContent;
                         if (!content) continue;
-                        // console.log(`[${user}]${content}`);
+
                         const commentData: ICommentData = {
                             user,
                             content,

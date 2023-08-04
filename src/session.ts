@@ -1,7 +1,6 @@
 import { ChatCompletionRequestMessage } from "openai";
 import { presetMessages } from "@/config";
 import { createBot } from "@/bot";
-import logger from "@/utils/logger";
 
 type role = "user" | "assistant" | "system";
 const addMessage = (message: string, role: role): ChatCompletionRequestMessage => ({
@@ -33,13 +32,7 @@ class Session {
     async ask(user: string, message: string) {
         const messages = this.set(user, message, "user");
         const answer = await createBot(messages);
-        // 没有回答
-        if (!answer) return "我好像迷失在了无尽的宇宙中...";
-
-        this.set(user, answer!, "assistant");
-
-        // TODO:@用户并回复
-        logger.warn(`[Bot answer ${user}]`, answer);
+        this.set(user, answer, "assistant");
         return answer;
     }
 }
