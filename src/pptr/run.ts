@@ -4,7 +4,7 @@ import { puppeteerUserDataDir, USER_AGENT } from "@/config";
 
 export interface ITasks {
     taskName: string; // 任务名
-    url: string; // 地址
+    url?: string; // 地址
     taskFn: (page: Page) => Promise<void>; // 任务函数
 }
 
@@ -30,7 +30,7 @@ export const runPuppeteer = async (tasks: ITasks[], isClose: boolean = true) => 
     for (const task of tasks) {
         const {taskName, url, taskFn} = task;
         logger.info(`开始执行任务：${taskName}`);
-        await page.goto(url);
+        url && await page.goto(url);
         await taskFn(page);
     }
 
