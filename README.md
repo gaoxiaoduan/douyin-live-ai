@@ -16,7 +16,15 @@
 pnpm install
 ```
 
-2.修改直播间地址
+2. 修改配置
+
+设置OpenAI KEY， 创建`.env`文件，添加如下内容
+
+```dotenv
+OPENAI_API_KEY=(OpenAI KEY,如:sk-xxxx)
+```
+
+设置直播间地址
 
 配置文件路径`src/config/index.ts`
 
@@ -24,7 +32,7 @@ pnpm install
 export const DOUYIN_LIVE_URL = "https://live.douyin.com/xxxx";
 ```
 
-2.编译并运行
+3.编译并运行
 
 ```bash
 pnpm run build
