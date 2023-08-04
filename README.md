@@ -6,4 +6,32 @@
 
 - [x] 调用OpenAI接口
 - [x] 抓取直播间评论
-- [ ] 自动回复评论
+- [x] 自动回复评论
+
+## 使用方法
+
+1. 安装依赖
+
+```bash
+pnpm install
+```
+
+2.修改直播间地址
+
+配置文件路径`src/config/index.ts`
+
+```ts
+export const DOUYIN_LIVE_URL = "https://live.douyin.com/xxxx";
+```
+
+2.编译并运行
+
+```bash
+pnpm run build
+pnpm run dev
+```
+
+## 注意事项
+
+- 登录时的验证码会很大，可能需要全屏才能用手机扫描到
+- 可能会存在扫码后跳二次验证的可能，目前需要手动验证
