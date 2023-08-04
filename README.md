@@ -32,7 +32,7 @@ OPENAI_API_KEY=(OpenAI KEY,如:sk-xxxx)
 export const DOUYIN_LIVE_URL = "https://live.douyin.com/xxxx";
 ```
 
-3.编译并运行
+3. 编译并运行
 
 ```bash
 pnpm run build
