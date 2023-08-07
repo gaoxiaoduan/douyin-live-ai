@@ -24,15 +24,22 @@ export const getLiveComment = async (page: Page) => {
         let isWakeUp = false;
         let ask = "";
 
-        // 识别唤醒词
-        for (const word of WAKE_UP_WORDS) {
-            if (content.startsWith(word)) {
-                logger.info("唤醒词：", word, user);
-                isWakeUp = true;
-                ask = content.replace(word, "");
-                break;
+        if (WAKE_UP_WORDS.length) {
+            // 识别唤醒词
+            for (const word of WAKE_UP_WORDS) {
+                if (content.startsWith(word)) {
+                    logger.info("唤醒词：", word, user);
+                    isWakeUp = true;
+                    ask = content.replace(word, "");
+                    break;
+                }
             }
+        } else if (WAKE_UP_WORDS.length === 0) {
+            logger.info("无唤醒词，直接回复");
+            ask = content;
+            isWakeUp = true;
         }
+
         if (!isWakeUp) return;
 
         // AI接口调用
