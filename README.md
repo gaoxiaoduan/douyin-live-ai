@@ -21,7 +21,9 @@ pnpm install
 设置OpenAI KEY， 创建`.env`文件，添加如下内容
 
 ```dotenv
-OPENAI_API_KEY=(OpenAI KEY,如:sk-xxxx)
+OPENAI_API_KEY=(OpenAI KEY)
+# 示例如下
+OPENAI_API_KEY=sk-xxxxxxx
 ```
 
 设置直播间地址
