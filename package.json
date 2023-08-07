@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "module": "./dist/index.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "dev": "node ./dist/bundle.js",
-    "dev:watch": "rollup -c -w --watch.onEnd='npm run dev'"
+    "dev": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,10 +21,12 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.4.5",
     "@types/qrcode-terminal": "^0.12.0",
     "rollup": "^3.27.0",
+    "rollup-plugin-node-externals": "^6.1.1",
     "tslib": "^2.6.1"
   }
 }

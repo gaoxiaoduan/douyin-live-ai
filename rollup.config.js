@@ -1,14 +1,22 @@
 import { defineConfig } from "rollup";
 import typescript from "@rollup/plugin-typescript";
-
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import externals from "rollup-plugin-node-externals";
+import pkg from "./package.json" assert { type: "json" };
+import { dirname } from "path";
 
 export default defineConfig({
     input: "src/index.ts",
     output: {
-        file: "dist/bundle.js",
+        dir: dirname(pkg.module),
         format: "esm",
+        preserveModules: true
     },
     plugins: [
+        nodeResolve(),
+        externals({
+            devDeps: false
+        }),
         typescript()
     ]
 });
