@@ -2,7 +2,8 @@ import { defineConfig } from "rollup";
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import externals from "rollup-plugin-node-externals";
-import pkg from "./package.json" assert { type: "json" };
+import { readFileSync } from "fs";
+const pkg = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8"));
 import { dirname } from "path";
 
 export default defineConfig({

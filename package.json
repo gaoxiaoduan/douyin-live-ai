@@ -28,5 +28,10 @@
     "rollup": "^3.27.0",
     "rollup-plugin-node-externals": "^6.1.1",
     "tslib": "^2.6.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "axios": "^1.17.0"
+    }
   }
 }
